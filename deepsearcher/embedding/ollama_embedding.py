@@ -40,13 +40,26 @@ class OllamaEmbedding(BaseEmbedding):
         else:
             base_url = "http://localhost:11434/"
 
+        # Initialize client first
+        self.client = Client(host=base_url, **kwargs)
+        self.batch_size = batch_size
+
         if "dimension" in kwargs:
             dimension = kwargs.pop("dimension")
         else:
-            dimension = OLLAMA_MODEL_DIM_MAP[model]
+            if model in OLLAMA_MODEL_DIM_MAP:
+                dimension = OLLAMA_MODEL_DIM_MAP[model]
+            else:
+                try:
+                    dummy_response = self.client.embed(model=self.model, input="test")
+                    dimension = len(dummy_response["embeddings"][0])
+                except Exception as e:
+                    print(
+                        f"Warning: Could not determine model dimension, using default 1024. Error: {e}"
+                    )
+                    dimension = 1024
+
         self.dim = dimension
-        self.client = Client(host=base_url, **kwargs)
-        self.batch_size = batch_size
 
     def embed_query(self, text: str) -> List[float]:
         """
