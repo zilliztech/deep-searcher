@@ -11,7 +11,7 @@
 
 ---
 
-DeepSearcher combines cutting-edge LLMs (OpenAI o3, Qwen3, DeepSeek, Grok 3, Claude 4 Sonnet, Llama 4, QwQ, etc.) and Vector Databases (Milvus, Zilliz Cloud etc.) to perform search, evaluation, and reasoning based on private data, providing highly accurate answer and comprehensive report. This project is suitable for enterprise knowledge management, intelligent Q&A systems, and information retrieval scenarios.
+DeepSearcher combines cutting-edge LLMs (OpenAI o3, Qwen3, DeepSeek, Grok 4, Claude 4 Sonnet, Llama 4, QwQ, etc.) and Vector Databases (Milvus, Zilliz Cloud etc.) to perform search, evaluation, and reasoning based on private data, providing highly accurate answer and comprehensive report. This project is suitable for enterprise knowledge management, intelligent Q&A systems, and information retrieval scenarios.
 
 ![Architecture](./assets/pic/deep-searcher-arch.png)
 
@@ -148,7 +148,7 @@ result = query("Write a report about xxx.") # Your question here
 <details>
   <summary>Example (XAI Grok)</summary>
     <p> Make sure you have prepared your XAI API KEY as an env variable <code>XAI_API_KEY</code>.</p>
-    <pre><code>config.set_provider_config("llm", "XAI", {"model": "grok-2-latest"})</code></pre>
+    <pre><code>config.set_provider_config("llm", "XAI", {"model": "grok-4-0709"})</code></pre>
     <p> More details about XAI Grok: https://docs.x.ai/docs/overview#featured-models </p>
 </details>
 
@@ -552,7 +552,7 @@ nest_asyncio.apply()
 ### 🔹 LLM Support
 - [OpenAI](https://platform.openai.com/docs/models) (`OPENAI_API_KEY` env variable required)
 - [DeepSeek](https://api-docs.deepseek.com/) (`DEEPSEEK_API_KEY` env variable required)
-- [XAI Grok](https://x.ai/blog/grok-3) (`XAI_API_KEY` env variable required)
+- [XAI Grok](https://x.ai/api) (`XAI_API_KEY` env variable required)
 - [Anthropic Claude](https://docs.anthropic.com/en/home) (`ANTHROPIC_API_KEY` env variable required)
 - [SiliconFlow Inference Service](https://docs.siliconflow.cn/en/userguide/introduction) (`SILICONFLOW_API_KEY` env variable required)
 - [PPIO](https://ppinfra.com/model-api/product/llm-api?utm_source=github_deep-searcher) (`PPIO_API_KEY` env variable required)

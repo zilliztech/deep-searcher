@@ -18,7 +18,7 @@ class XAI(BaseLLM):
         client: The OpenAI-compatible client instance for X.AI API.
     """
 
-    def __init__(self, model: str = "grok-2-latest", **kwargs):
+    def __init__(self, model: str = "grok-4", **kwargs):
         """
         Initialize an X.AI language model client.
 
