@@ -25,6 +25,7 @@ config.set_provider_config("embedding", "(EmbeddingModelName)", "(Arguments dict
 | **NovitaEmbedding** | Novita AI embedding | Cost-effective |
 | **SentenceTransformerEmbedding** | Sentence Transfomer Embedding | Self-hosted option |
 | **IBM watsonx.ai** | Various options | IBM's Enterprise AI platform |
+| **JiekouAIEmbedding** | JiekouAI embedding | High quality, cost-effective |
 
 ## 🔍 Provider Examples
 
@@ -124,3 +125,10 @@ config.set_provider_config("embedding", "VoyageEmbedding", {"model": "voyage-3"}
     config.set_provider_config("embedding", "WatsonXEmbedding", {"model": "ibm/slate-125m-english-rtrvr-v2"})
     ```
     *Requires `pip install ibm-watsonx-ai`*
+
+??? example "JiekouAI"
+
+    ```python
+    config.set_provider_config("embedding", "JiekouAIEmbedding", {"model": "qwen/qwen3-embedding-8b"})
+    ```
+    *Requires `JIEKOU_API_KEY` environment variable*

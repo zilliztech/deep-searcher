@@ -5,6 +5,7 @@ from .bedrock import Bedrock
 from .deepseek import DeepSeek
 from .gemini import Gemini
 from .glm import GLM
+from .jiekouai import JiekouAI
 from .novita import Novita
 from .ollama import Ollama
 from .openai_llm import OpenAI
@@ -32,4 +33,5 @@ __all__ = [
     "Novita",
     "Aliyun",
     "WatsonX",
+    "JiekouAI",
 ]

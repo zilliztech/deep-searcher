@@ -25,6 +25,7 @@ Support for various embedding models to convert text into vector representations
 | **[PPIO](https://ppinfra.com/model-api/product/llm-api)** | `PPIO_API_KEY` | Flexible cloud embeddings |
 | **[Novita AI](https://novita.ai/docs/api-reference/model-apis-llm-create-embeddings)** | `NOVITA_API_KEY` | Rich model selection |
 | **[IBM watsonx.ai](https://www.ibm.com/products/watsonx-ai/foundation-models#ibmembedding)** | `WATSONX_APIKEY`, `WATSONX_URL`, `WATSONX_PROJECT_ID` | IBM's Enterprise AI platform |
+| **[JiekouAI](https://jiekou.ai/?utm_source=github_deep-searcher)** | `JIEKOU_API_KEY` | JiekouAI's embedding models |
 
 ## 🧠 Large Language Models {#llm-support}
 
@@ -44,6 +45,7 @@ Support for various large language models (LLMs) to process queries and generate
 | **[Ollama](https://ollama.com/)** | None | Local LLM deployment |
 | **[Novita AI](https://novita.ai/docs/guides/introduction)** | `NOVITA_API_KEY` | Diverse AI services |
 | **[IBM watsonx.ai](https://www.ibm.com/products/watsonx-ai/foundation-models#ibmfm)** | `WATSONX_APIKEY`, `WATSONX_URL`, `WATSONX_PROJECT_ID` | IBM's Enterprise AI platform |
+| **[JiekouAI](https://jiekou.ai/?utm_source=github_deep-searcher)** | `JIEKOU_API_KEY` | Various open-source and closed-source models |
 
 ## 📄 Document Loader {#document-loader}
 

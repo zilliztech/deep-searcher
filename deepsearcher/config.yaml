@@ -24,6 +24,12 @@ provide_settings:
 ##      api_key: "sk_xxxxxx"  # Uncomment to override the `PPIO_API_KEY` set in the environment variable
 ##      base_url: ""
 
+#    provider: "JiekouAI"
+#    config:
+#      model: "claude-sonnet-4-5-20250929"
+##      api_key: "xxxx"  # Uncomment to override the `JIEKOU_API_KEY` set in the environment variable
+##      base_url: ""
+
 #    provider: "TogetherAI"
 #    config:
 #      model: "deepseek-ai/DeepSeek-R1"
