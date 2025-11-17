@@ -2,7 +2,6 @@ import unittest
 import os
 from unittest.mock import patch, MagicMock
 
-import requests
 from deepsearcher.embedding import JiekouAIEmbedding
 
 

@@ -11,7 +11,7 @@ from deepsearcher.llm.base import ChatResponse
 
 
 class TestJiekouAI(unittest.TestCase):
-    """Tests for the JiekouAI LLM provider."""
+    """Tests for the Jiekou.AI LLM provider."""
 
     def setUp(self):
         """Set up test fixtures."""

@@ -26,7 +26,7 @@ config.set_provider_config("llm", "(LLMName)", "(Arguments dict)")
 | **Bedrock** | Amazon Bedrock LLMs | anthropic.claude, ai21.j2 |
 | **Novita** | Novita AI models | Various options |
 | **IBM watsonx.ai** | IBM Enterprise AI platform | Various options |
-| **JiekouAI** | JiekouAI models | Claude, OpenAI, Deepseek, Grok, Qwen, etc. |
+| **Jiekou.AI** | Jiekou.AI models | Claude, OpenAI, Deepseek, Grok, Qwen, etc. |
 
 ## 🔍 Provider Examples
 
@@ -192,12 +192,12 @@ config.set_provider_config("llm", "WatsonX", {"model": "ibm/granite-3-3-8b-instr
     More details about WatsonX: [https://www.ibm.com/products/watsonx-ai/foundation-models](https://www.ibm.com/products/watsonx-ai/foundation-models)
 ```
 
-??? example "JiekouAI"
+??? example "Jiekou.AI"
 
     ```python
     config.set_provider_config("llm", "JiekouAI", {"model": "claude-sonnet-4-5-20250929"})
     ```
     *Requires `JIEKOU_API_KEY` environment variable*
     
-    More details about JiekouAI: [https://docs.jiekou.ai/docs/support/quickstart](https://docs.jiekou.ai/docs/support/quickstart)
+    More details about Jiekou.AI: [https://docs.jiekou.ai/docs/support/quickstart](https://docs.jiekou.ai/docs/support/quickstart)
 

@@ -5,7 +5,7 @@ import requests
 
 from deepsearcher.embedding.base import BaseEmbedding
 
-# TODO: Update with actual JiekouAI model dimensions when available
+# TODO: Update with actual Jiekou.AI model dimensions when available
 JIEKOUAI_MODEL_DIM_MAP = {
     "qwen/qwen3-embedding-0.6b": 1024,
     "qwen/qwen3-embedding-8b": 1024,
@@ -17,21 +17,21 @@ JIEKOUAI_EMBEDDING_API = "https://api.jiekou.ai/openai/v1/embeddings"
 
 class JiekouAIEmbedding(BaseEmbedding):
     """
-    JiekouAI embedding model implementation.
+    Jiekou.AI embedding model implementation.
 
-    This class provides an interface to the JiekouAI embedding API, which offers
+    This class provides an interface to the Jiekou.AI embedding API, which offers
     various embedding models for text processing.
     """
 
     def __init__(self, model="qwen/qwen3-embedding-8b", batch_size=32, **kwargs):
         """
-        Initialize the JiekouAI embedding model.
+        Initialize the Jiekou.AI embedding model.
 
         Args:
             model (str): The model identifier to use for embeddings. Default is "baai/bge-m3".
             batch_size (int): Maximum number of texts to process in a single batch. Default is 32.
             **kwargs: Additional keyword arguments.
-                - api_key (str, optional): The JiekouAI API key. If not provided,
+                - api_key (str, optional): The Jiekou.AI API key. If not provided,
                   it will be read from the JIEKOU_API_KEY environment variable.
                 - model_name (str, optional): Alternative way to specify the model.
 

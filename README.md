@@ -96,7 +96,7 @@ result = query("Write a report about xxx.") # Your question here
 #### LLM Configuration
 
 <pre><code>config.set_provider_config("llm", "(LLMName)", "(Arguments dict)")</code></pre>
-<p>The "LLMName" can be one of the following: ["DeepSeek", "OpenAI", "XAI", "SiliconFlow", "Aliyun", "PPIO", "TogetherAI", "Gemini", "Ollama", "Novita", "JiekouAI"]</p>
+<p>The "LLMName" can be one of the following: ["DeepSeek", "OpenAI", "XAI", "SiliconFlow", "Aliyun", "PPIO", "TogetherAI", "Gemini", "Ollama", "Novita", "Jiekou.AI"]</p>
 <p> The "Arguments dict" is a dictionary that contains the necessary arguments for the LLM class.</p>
 
 <details>
@@ -174,10 +174,10 @@ result = query("Write a report about xxx.") # Your question here
 </details>
 
 <details>
-  <summary>Example (Claude Sonnet 4.5 from JiekouAI)</summary>
-    <p> Make sure you have prepared your JiekouAI API KEY as an env variable <code>JIEKOU_API_KEY</code>. You can create an API Key <a href="https://jiekou.ai/settings/key-management?utm_source=github_deep-searcher">here</a>. </p>
+  <summary>Example (Claude Sonnet 4.5 from Jiekou.AI)</summary>
+    <p> Make sure you have prepared your Jiekou.AI API KEY as an env variable <code>JIEKOU_API_KEY</code>. You can create an API Key <a href="https://jiekou.ai/settings/key-management?utm_source=github_deep-searcher">here</a>. </p>
     <pre><code>config.set_provider_config("llm", "JiekouAI", {"model": "claude-sonnet-4-5-20250929"})</code></pre>
-    <p> More details about JiekouAI: https://docs.jiekou.ai/docs/support/quickstart?utm_source=github_deep-searcher </p>
+    <p> More details about Jiekou.AI: https://docs.jiekou.ai/docs/support/quickstart?utm_source=github_deep-searcher </p>
 </details>
 
 <details>
@@ -316,10 +316,10 @@ result = query("Write a report about xxx.") # Your question here
 </details>
 
 <details>
-  <summary>Example (JiekouAI embedding)</summary>
-    <p> Make sure you have prepared your JiekouAI API KEY as an env variable <code>JIEKOU_API_KEY</code>.</p>
+  <summary>Example (Jiekou.AI embedding)</summary>
+    <p> Make sure you have prepared your Jiekou.AI API KEY as an env variable <code>JIEKOU_API_KEY</code>.</p>
     <pre><code>config.set_provider_config("embedding", "JiekouAIEmbedding", {"model": "qwen/qwen3-embedding-8b"})</code></pre>
-    <p> More details about JiekouAI: https://docs.jiekou.ai/docs/support/quickstart?utm_source=github_deep-searcher </p>
+    <p> More details about Jiekou.AI: https://docs.jiekou.ai/docs/support/quickstart?utm_source=github_deep-searcher </p>
 </details>
 
 <details>
@@ -561,7 +561,7 @@ nest_asyncio.apply()
 - [PPIO](https://ppinfra.com/model-api/product/llm-api?utm_source=github_deep-searcher) (`PPIO_API_KEY` env variable required)
 - [Novita AI](https://novita.ai/docs/api-reference/model-apis-llm-create-embeddings?utm_source=github_deep-searcher&utm_medium=github_readme&utm_campaign=link) (`NOVITA_API_KEY` env variable required)
 - [IBM watsonx.ai](https://www.ibm.com/products/watsonx-ai/foundation-models#ibmembedding) (`WATSONX_APIKEY`, `WATSONX_URL`, `WATSONX_PROJECT_ID` env variables required)
-- [JiekouAI](https://jiekou.ai/?utm_source=github_deep-searcher) (`JIEKOU_API_KEY` env variable required)
+- [Jiekou.AI](https://jiekou.ai/?utm_source=github_deep-searcher) (`JIEKOU_API_KEY` env variable required)
 
 ### 🔹 LLM Support
 - [OpenAI](https://platform.openai.com/docs/models) (`OPENAI_API_KEY` env variable required)
@@ -576,7 +576,7 @@ nest_asyncio.apply()
 - [Ollama](https://ollama.com/)
 - [Novita AI](https://novita.ai/docs/guides/introduction?utm_source=github_deep-searcher&utm_medium=github_readme&utm_campaign=link) (`NOVITA_API_KEY` env variable required)
 - [IBM watsonx.ai](https://www.ibm.com/products/watsonx-ai/foundation-models#ibmfm) (`WATSONX_APIKEY`, `WATSONX_URL`, `WATSONX_PROJECT_ID` env variable required)
-- [JiekouAI](https://jiekou.ai/?utm_source=github_deep-searcher) (`JIEKOU_API_KEY` env variable required)
+- [Jiekou.AI](https://jiekou.ai/?utm_source=github_deep-searcher) (`JIEKOU_API_KEY` env variable required)
 
 ### 🔹 Document Loader
 - Local File

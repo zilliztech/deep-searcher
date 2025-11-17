@@ -6,25 +6,25 @@ from deepsearcher.llm.base import BaseLLM, ChatResponse
 
 class JiekouAI(BaseLLM):
     """
-    JiekouAI language model implementation.
+    Jiekou.AI language model implementation.
 
     This class provides an interface to interact with language models
-    hosted on the JiekouAI platform.
+    hosted on the Jiekou.AI platform.
 
     Attributes:
-        model (str): The model identifier to use on JiekouAI platform.
-        client: The OpenAI-compatible client instance for JiekouAI API.
+        model (str): The model identifier to use on Jiekou.AI platform.
+        client: The OpenAI-compatible client instance for Jiekou.AI API.
     """
 
     def __init__(self, model: str = "claude-sonnet-4-5-20250929", **kwargs):
         """
-        Initialize a JiekouAI language model client.
+        Initialize a Jiekou.AI language model client.
 
         Args:
             model (str, optional): The model identifier to use. Defaults to "claude-sonnet-4-5-20250929".
             **kwargs: Additional keyword arguments to pass to the OpenAI client.
-                - api_key: JiekouAI API key. If not provided, uses JIEKOU_API_KEY environment variable.
-                - base_url: JiekouAI API base URL. If not provided, defaults to "https://api.jiekou.ai/openai/v1".
+                - api_key: Jiekou.AI API key. If not provided, uses JIEKOU_API_KEY environment variable.
+                - base_url: Jiekou.AI API base URL. If not provided, defaults to "https://api.jiekou.ai/openai/v1".
         """
         from openai import OpenAI as OpenAI_
 
@@ -41,7 +41,7 @@ class JiekouAI(BaseLLM):
 
     def chat(self, messages: List[Dict]) -> ChatResponse:
         """
-        Send a chat message to the JiekouAI model and get a response.
+        Send a chat message to the Jiekou.AI model and get a response.
 
         Args:
             messages (List[Dict]): A list of message dictionaries, typically in the format
