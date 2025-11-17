@@ -28,6 +28,6 @@ __all__ = [
     "FastEmbedEmbedding",
     "NovitaEmbedding",
     "SentenceTransformerEmbedding",
-    "WatsonXEmbedding", 
+    "WatsonXEmbedding",
     "JiekouAIEmbedding",
 ]
