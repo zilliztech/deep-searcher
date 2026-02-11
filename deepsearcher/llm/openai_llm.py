@@ -29,12 +29,16 @@ class OpenAI(BaseLLM):
         from openai import OpenAI as OpenAI_
 
         self.model = model
-        if "api_key" in kwargs:
+        has_explicit_api_key = "api_key" in kwargs
+        if has_explicit_api_key:
             api_key = kwargs.pop("api_key")
         else:
             api_key = os.getenv("OPENAI_API_KEY")
         if "base_url" in kwargs:
             base_url = kwargs.pop("base_url")
+        elif has_explicit_api_key:
+            # Keep explicit api_key initialization isolated from ambient base URL env settings.
+            base_url = None
         else:
             base_url = os.getenv("OPENAI_BASE_URL")
         self.client = OpenAI_(api_key=api_key, base_url=base_url, **kwargs)

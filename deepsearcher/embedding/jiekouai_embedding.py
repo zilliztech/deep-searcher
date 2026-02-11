@@ -23,7 +23,7 @@ class JiekouAIEmbedding(BaseEmbedding):
     various embedding models for text processing.
     """
 
-    def __init__(self, model="qwen/qwen3-embedding-8b", batch_size=32, **kwargs):
+    def __init__(self, model="baai/bge-m3", batch_size=32, **kwargs):
         """
         Initialize the Jiekou.AI embedding model.
 
@@ -38,7 +38,7 @@ class JiekouAIEmbedding(BaseEmbedding):
         Raises:
             RuntimeError: If no API key is provided or found in environment variables.
         """
-        if "model_name" in kwargs and (not model or model == "qwen/qwen3-embedding-8b"):
+        if "model_name" in kwargs and (not model or model == "baai/bge-m3"):
             model = kwargs.pop("model_name")
         self.model = model
 
