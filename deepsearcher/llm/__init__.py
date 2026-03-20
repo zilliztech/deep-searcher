@@ -6,6 +6,7 @@ from .deepseek import DeepSeek
 from .gemini import Gemini
 from .glm import GLM
 from .jiekouai import JiekouAI
+from .minimax import MiniMax
 from .novita import Novita
 from .ollama import Ollama
 from .openai_llm import OpenAI
@@ -34,4 +35,5 @@ __all__ = [
     "Aliyun",
     "WatsonX",
     "JiekouAI",
+    "MiniMax",
 ]

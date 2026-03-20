@@ -3,6 +3,7 @@ from .fastembed_embdding import FastEmbedEmbedding
 from .gemini_embedding import GeminiEmbedding
 from .glm_embedding import GLMEmbedding
 from .jiekouai_embedding import JiekouAIEmbedding
+from .minimax_embedding import MiniMaxEmbedding
 from .milvus_embedding import MilvusEmbedding
 from .novita_embedding import NovitaEmbedding
 from .ollama_embedding import OllamaEmbedding
@@ -30,4 +31,5 @@ __all__ = [
     "SentenceTransformerEmbedding",
     "WatsonXEmbedding",
     "JiekouAIEmbedding",
+    "MiniMaxEmbedding",
 ]
