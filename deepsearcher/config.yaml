@@ -111,11 +111,6 @@ provide_settings:
     # config:
     #   model: "BAAI/bge-large-zh-v1.5"
 
-#    provider: "MiniMaxEmbedding"
-#    config:
-#      model: "embo-01"
-##      api_key: "xxxx"  # Uncomment to override the `MINIMAX_API_KEY` set in the environment variable
-
   file_loader:
     provider: "PDFLoader"
     config: {}
