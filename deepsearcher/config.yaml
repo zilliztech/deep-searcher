@@ -52,6 +52,12 @@ provide_settings:
 #      model: "deepseek/deepseek-v3-0324"
 ##      api_key: "sk_xxxxxx"  # Uncomment to override the `NOVITA_API_KEY` set in the environment variable
 
+#    provider: "MiniMax"
+#    config:
+#      model: "MiniMax-M2.7"
+##      api_key: "xxxx"  # Uncomment to override the `MINIMAX_API_KEY` set in the environment variable
+##      base_url: ""
+
   embedding:
     provider: "OpenAIEmbedding"
     config:
