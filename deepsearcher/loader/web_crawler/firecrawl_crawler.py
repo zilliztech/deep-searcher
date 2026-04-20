@@ -1,7 +1,14 @@
 import os
 from typing import List, Optional
 
-from firecrawl import FirecrawlApp, ScrapeOptions
+try:
+    from firecrawl import FirecrawlApp, ScrapeOptions
+except ImportError:
+    try:
+        from firecrawl import FirecrawlApp
+        from firecrawl.types import ScrapeOptions
+    except ImportError:
+        from firecrawl import FirecrawlApp, V1ScrapeOptions as ScrapeOptions  # type: ignore[attr-defined]
 from langchain_core.documents import Document
 
 from deepsearcher.loader.web_crawler.base import BaseCrawler
