@@ -52,6 +52,8 @@ class TogetherAI(BaseLLM):
             model=self.model,
             messages=messages,
         )
+        if not response.choices or response.choices[0].message is None:
+            raise ValueError("LLM returned empty or filtered response")
         return ChatResponse(
             content=response.choices[0].message.content,
             total_tokens=response.usage.total_tokens,
