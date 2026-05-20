@@ -1,10 +1,10 @@
 import unittest
-from unittest.mock import MagicMock
+
 import numpy as np
 
-from deepsearcher.llm.base import BaseLLM, ChatResponse
 from deepsearcher.embedding.base import BaseEmbedding
-from deepsearcher.vector_db.base import BaseVectorDB, RetrievalResult, CollectionInfo
+from deepsearcher.llm.base import BaseLLM, ChatResponse
+from deepsearcher.vector_db.base import BaseVectorDB, CollectionInfo, RetrievalResult
 
 
 class MockLLM(BaseLLM):
@@ -43,7 +43,7 @@ class MockLLM(BaseLLM):
             try:
                 import ast
                 return ast.literal_eval(text)
-            except:
+            except (SyntaxError, ValueError):
                 pass
                 
         return ["test_collection"]
@@ -101,6 +101,7 @@ class MockVectorDB(BaseVectorDB):
         self.last_search_collection = collection
         self.last_search_vector = vector
         self.last_search_top_k = top_k
+        self.last_search_kwargs = kwargs
         
         return [
             RetrievalResult(
@@ -139,4 +140,4 @@ class BaseAgentTest(unittest.TestCase):
         """Set up test fixtures for agent tests."""
         self.llm = MockLLM()
         self.embedding_model = MockEmbedding(dimension=8)
-        self.vector_db = MockVectorDB() 
+        self.vector_db = MockVectorDB()

@@ -133,14 +133,16 @@ class ChainOfRAG(RAGAgent):
         )
         return self.llm.remove_think(chat_response.content), chat_response.total_tokens
 
-    def _retrieve_and_answer(self, query: str) -> Tuple[str, List[RetrievalResult], int]:
+    def _retrieve_and_answer(self, query: str, **kwargs) -> Tuple[str, List[RetrievalResult], int]:
         consume_tokens = 0
         if self.route_collection:
             selected_collections, n_token_route = self.collection_router.invoke(
-                query=query, dim=self.embedding_model.dimension
+                query=query, dim=self.embedding_model.dimension, **kwargs
             )
         else:
-            selected_collections = self.collection_router.all_collections
+            selected_collections = self.collection_router.filter_authorized_collection_names(
+                self.collection_router.all_collections, **kwargs
+            )
             n_token_route = 0
         consume_tokens += n_token_route
         all_retrieved_results = []
@@ -148,7 +150,7 @@ class ChainOfRAG(RAGAgent):
             log.color_print(f"<search> Search [{query}] in [{collection}]...  </search>\n")
             query_vector = self.embedding_model.embed_query(query)
             retrieved_results = self.vector_db.search_data(
-                collection=collection, vector=query_vector, query_text=query
+                collection=collection, vector=query_vector, query_text=query, **kwargs
             )
             all_retrieved_results.extend(retrieved_results)
         all_retrieved_results = deduplicate_results(all_retrieved_results)
@@ -245,7 +247,7 @@ class ChainOfRAG(RAGAgent):
             log.color_print(f">> Iteration: {iter + 1}\n")
             followup_query, n_token0 = self._reflect_get_subquery(query, intermediate_contexts)
             intermediate_answer, retrieved_results, n_token1 = self._retrieve_and_answer(
-                followup_query
+                followup_query, **kwargs
             )
             supported_retrieved_results, n_token2 = self._get_supported_docs(
                 retrieved_results, followup_query, intermediate_answer

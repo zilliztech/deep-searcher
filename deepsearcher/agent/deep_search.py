@@ -117,14 +117,16 @@ class DeepSearch(RAGAgent):
         response_content = self.llm.remove_think(chat_response.content)
         return self.llm.literal_eval(response_content), chat_response.total_tokens
 
-    async def _search_chunks_from_vectordb(self, query: str, sub_queries: List[str]):
+    async def _search_chunks_from_vectordb(self, query: str, sub_queries: List[str], **kwargs):
         consume_tokens = 0
         if self.route_collection:
             selected_collections, n_token_route = self.collection_router.invoke(
-                query=query, dim=self.embedding_model.dimension
+                query=query, dim=self.embedding_model.dimension, **kwargs
             )
         else:
-            selected_collections = self.collection_router.all_collections
+            selected_collections = self.collection_router.filter_authorized_collection_names(
+                self.collection_router.all_collections, **kwargs
+            )
             n_token_route = 0
         consume_tokens += n_token_route
 
@@ -133,7 +135,7 @@ class DeepSearch(RAGAgent):
         for collection in selected_collections:
             log.color_print(f"<search> Search [{query}] in [{collection}]...  </search>\n")
             retrieved_results = self.vector_db.search_data(
-                collection=collection, vector=query_vector, query_text=query
+                collection=collection, vector=query_vector, query_text=query, **kwargs
             )
             if not retrieved_results or len(retrieved_results) == 0:
                 log.color_print(
@@ -232,7 +234,7 @@ class DeepSearch(RAGAgent):
 
             # Create all search tasks
             search_tasks = [
-                self._search_chunks_from_vectordb(query, sub_gap_queries)
+                self._search_chunks_from_vectordb(query, sub_gap_queries, **kwargs)
                 for query in sub_gap_queries
             ]
             # Execute all tasks in parallel and wait for results
