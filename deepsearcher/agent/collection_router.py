@@ -1,4 +1,4 @@
-from typing import List, Tuple
+from typing import List, Optional, Set, Tuple
 
 from deepsearcher.agent.base import BaseAgent
 from deepsearcher.llm.base import BaseLLM
@@ -39,6 +39,38 @@ class CollectionRouter(BaseAgent):
             for collection_info in self.vector_db.list_collections(dim=dim)
         ]
 
+    def _get_authorized_collection_set(self, **kwargs) -> Optional[Set[str]]:
+        authorized_collections = kwargs.get("authorized_collection_set")
+        if authorized_collections is None:
+            authorized_collections = kwargs.get("authorized_collections")
+        if authorized_collections is None:
+            return None
+        return set(authorized_collections)
+
+    def filter_authorized_collection_names(
+        self, collection_names: List[str], **kwargs
+    ) -> List[str]:
+        authorized_collection_set = self._get_authorized_collection_set(**kwargs)
+        if authorized_collection_set is None:
+            return collection_names
+
+        return [
+            collection_name
+            for collection_name in collection_names
+            if collection_name in authorized_collection_set
+        ]
+
+    def _filter_authorized_collections(self, collection_infos: List, **kwargs) -> List:
+        authorized_collection_set = self._get_authorized_collection_set(**kwargs)
+        if authorized_collection_set is None:
+            return collection_infos
+
+        return [
+            collection_info
+            for collection_info in collection_infos
+            if collection_info.collection_name in authorized_collection_set
+        ]
+
     def invoke(self, query: str, dim: int, **kwargs) -> Tuple[List[str], int]:
         """
         Determine which collections are relevant for the given query.
@@ -56,7 +88,9 @@ class CollectionRouter(BaseAgent):
                 - The token usage for the routing operation
         """
         consume_tokens = 0
-        collection_infos = self.vector_db.list_collections(dim=dim)
+        collection_infos = self._filter_authorized_collections(
+            self.vector_db.list_collections(dim=dim), **kwargs
+        )
         if len(collection_infos) == 0:
             log.warning(
                 "No collections found in the vector database. Please check the database connection."
@@ -83,6 +117,14 @@ class CollectionRouter(BaseAgent):
         )
         selected_collections = self.llm.literal_eval(chat_response.content)
         consume_tokens += chat_response.total_tokens
+        allowed_collection_names = {
+            collection_info.collection_name for collection_info in collection_infos
+        }
+        selected_collections = [
+            collection_name
+            for collection_name in selected_collections
+            if collection_name in allowed_collection_names
+        ]
 
         for collection_info in collection_infos:
             # If a collection description is not provided, use the query as the search query

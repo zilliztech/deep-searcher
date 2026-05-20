@@ -88,7 +88,12 @@ class AzureSearch(BaseVectorDB):
         return [x.succeeded for x in result]
 
     def search_data(
-        self, collection: Optional[str], vector: List[float], top_k: int = 50
+        self,
+        collection: Optional[str],
+        vector: List[float],
+        top_k: int = 50,
+        *args,
+        **kwargs,
     ) -> List[RetrievalResult]:
         """Azure Cognitive Search implementation with compatibility for older SDK versions"""
         from azure.core.credentials import AzureKeyCredential
