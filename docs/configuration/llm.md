@@ -27,6 +27,7 @@ config.set_provider_config("llm", "(LLMName)", "(Arguments dict)")
 | **Novita** | Novita AI models | Various options |
 | **IBM watsonx.ai** | IBM Enterprise AI platform | Various options |
 | **Jiekou.AI** | Jiekou.AI models | Claude, OpenAI, Deepseek, Grok, Qwen, etc. |
+| **Atlas Cloud** | OpenAI-compatible inference platform | DeepSeek, Qwen, GLM, Kimi, MiniMax, etc. |
 
 ## 🔍 Provider Examples
 
@@ -43,6 +44,18 @@ config.set_provider_config("llm", "OpenAI", {"model": "o1-mini"})
 config.set_provider_config("llm", "DeepSeek", {"model": "deepseek-reasoner"})
 ```
 *Requires `DEEPSEEK_API_KEY` environment variable*
+
+### Atlas Cloud
+
+```python
+config.set_provider_config("llm", "AtlasCloud", {"model": "deepseek-ai/deepseek-v4-pro"})
+```
+*Requires `ATLASCLOUD_API_KEY` environment variable*
+
+`deepseek-ai/deepseek-v4-pro` is a reasoning model: it spends completion tokens on a hidden chain of
+thought before the answer, so a small `max_tokens` can return an empty `content` with
+`finish_reason="length"`. This provider leaves `max_tokens` unset, which is safe. Non-reasoning ids
+such as `deepseek-ai/DeepSeek-V3.1` are unaffected.
 
 ### IBM WatsonX
 
