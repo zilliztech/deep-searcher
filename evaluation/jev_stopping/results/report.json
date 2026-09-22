@@ -1,0 +1,85 @@
+{
+  "n": 100,
+  "policies": {
+    "llm": {
+      "round": 2.96,
+      "r2": 0.8125,
+      "r5": 0.9325,
+      "coverage": 0.9325,
+      "all_supports": 0.85,
+      "queries_losing_later_evidence": 8,
+      "llm_requests": 1110,
+      "jev_requests": 0,
+      "llm_input_tokens": 723356,
+      "llm_output_tokens": 207346,
+      "jev_input_tokens": 0,
+      "jev_estimated_usd": 0.0
+    },
+    "jev": {
+      "round": 3,
+      "r2": 0.8075,
+      "r5": 0.9325,
+      "coverage": 0.9325,
+      "all_supports": 0.86,
+      "queries_losing_later_evidence": 8,
+      "llm_requests": 829,
+      "jev_requests": 300,
+      "llm_input_tokens": 680580,
+      "llm_output_tokens": 168833,
+      "jev_input_tokens": 140893,
+      "jev_estimated_usd": 0.005917506
+    },
+    "reference_7": {
+      "round": 7,
+      "r2": 0.8375,
+      "r5": 0.97,
+      "coverage": 0.97,
+      "all_supports": 0.93,
+      "queries_losing_later_evidence": 0,
+      "llm_requests": 1939,
+      "jev_requests": 0,
+      "llm_input_tokens": 1565888,
+      "llm_output_tokens": 693504,
+      "jev_input_tokens": 0,
+      "jev_estimated_usd": 0.0
+    }
+  },
+  "first_stop_behavior": {
+    "same": 85,
+    "jev_earlier": 6,
+    "jev_later": 9
+  },
+  "state_agreement": 0.9257142857142857,
+  "new_api_usage": {
+    "llm_attempts": 2529,
+    "jev_attempts": 689,
+    "http_429": 0,
+    "transport_errors": 1,
+    "invalid_outputs": 0,
+    "jev_input_tokens_new": 354322,
+    "jev_estimated_usd_new": 0.014881524000000002
+  },
+  "latency": {
+    "llm": {
+      "n": 689,
+      "successful_request_median_seconds": 2.225678188726306
+    },
+    "jev": {
+      "n": 689,
+      "successful_request_median_seconds": 0.5516581814736128
+    }
+  },
+  "validation": {
+    "queries": 100,
+    "states": 700,
+    "input_alignment": true,
+    "document_integrity_and_order": true,
+    "metrics_recomputed": true
+  },
+  "limitations": [
+    "Evidence retrieval metrics, not final-answer correctness.",
+    "Paired shared-trajectory replay, not separate end-to-end latency runs.",
+    "BGE index differs from historical ada-002 evaluation.",
+    "Company API billing is not estimated. Jev price reference is $0.042 per million input tokens."
+  ]
+}

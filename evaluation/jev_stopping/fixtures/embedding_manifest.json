@@ -1,0 +1,10 @@
+{
+  "model": "BAAI/bge-large-en-v1.5",
+  "snapshot": "d4aa6901d3a41ba39fb536a557fa166f842b0e09",
+  "pooling": "CLS",
+  "normalized": true,
+  "max_length": 512,
+  "documents": 6119,
+  "truncated_documents": 90,
+  "query_prefix": "Represent this sentence for searching relevant passages: "
+}

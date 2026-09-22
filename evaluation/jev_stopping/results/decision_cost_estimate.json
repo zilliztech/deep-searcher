@@ -1,0 +1,22 @@
+{
+  "scope": "Stopping decisions only, across 100 queries; each policy stops at its own stopping round.",
+  "llm": {
+    "calls": 296,
+    "input_tokens": 68313,
+    "output_tokens": 57322,
+    "off_peak_usd": 0.044640149999999996,
+    "peak_usd": 0.08928029999999999
+  },
+  "jev": {
+    "calls": 300,
+    "input_tokens": 140893,
+    "usd": 0.005917506
+  },
+  "assumptions": [
+    "DeepSeek uses public Flash (V4.1) reference rates as a pricing proxy for the recorded deepseek-v4-flash service, not a measured bill.",
+    "All DeepSeek input priced as cache miss; output includes reasoning tokens.",
+    "Jev uses the experiment price reference of $0.042 per million input tokens."
+  ],
+  "source": "https://api-docs.deepseek.com/quick_start/pricing/",
+  "checked": "2026-09-21"
+}

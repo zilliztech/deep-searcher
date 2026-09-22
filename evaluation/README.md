@@ -51,3 +51,7 @@ Additionally, in our tests, weaker and smaller non-reasoning models sometimes fa
 We plotted the graph below with the number of iterations on the horizontal axis and the average token consumption per sample on the vertical axis:  
 ![](plot_results/max_iter_vs_avg_token_usage.png)  
 It is evident that as the number of iterations increases, the token consumption of Deep Searcher rises linearly. Based on this approximate token consumption, you can check the pricing on your model provider's website to estimate the cost of running evaluations with different iteration settings.
+
+## Adaptive stopping experiment
+
+See [the Jev and DeepSeek stopping comparison](jev_stopping/README.md) for a separate 100-query experiment, recorded results, charts, offline verification and a resumable evaluation harness. It evaluates when to stop searching and leaves the historical evaluation results unchanged.
