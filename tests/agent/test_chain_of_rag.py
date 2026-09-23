@@ -1,9 +1,8 @@
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock
 
 from deepsearcher.agent import ChainOfRAG
-from deepsearcher.vector_db.base import RetrievalResult
 from deepsearcher.llm.base import ChatResponse
-
+from deepsearcher.vector_db.base import RetrievalResult
 from tests.agent.test_base import BaseAgentTest
 
 
@@ -83,6 +82,34 @@ class TestChainOfRAG(BaseAgentTest):
         # Check the results
         self.assertEqual(answer, "Deep learning is a subset of machine learning that uses neural networks with multiple layers.")
         self.assertEqual(tokens, 15)  # 5 from collection_router + 10 from LLM
+
+    def test_retrieve_and_answer_forwards_authorization_context(self):
+        """Test vector DB search receives caller authorization context."""
+        query = "What is deep learning?"
+
+        self.chain_of_rag.collection_router.invoke = MagicMock(return_value=(["test_collection"], 5))
+        self.llm.chat = MagicMock(return_value=ChatResponse(
+            content="Deep learning is a subset of machine learning that uses neural networks with multiple layers.",
+            total_tokens=10
+        ))
+
+        answer, results, tokens = self.chain_of_rag._retrieve_and_answer(
+            query,
+            authorized_collection_set=["test_collection"],
+            tenant_id="tenant_a",
+        )
+
+        self.chain_of_rag.collection_router.invoke.assert_called_once_with(
+            query=query,
+            dim=self.embedding_model.dimension,
+            authorized_collection_set=["test_collection"],
+            tenant_id="tenant_a",
+        )
+        self.assertEqual(self.vector_db.last_search_kwargs["authorized_collection_set"], ["test_collection"])
+        self.assertEqual(self.vector_db.last_search_kwargs["tenant_id"], "tenant_a")
+        self.assertEqual(answer, "Deep learning is a subset of machine learning that uses neural networks with multiple layers.")
+        self.assertEqual(len(results), 3)
+        self.assertEqual(tokens, 15)
     
     def test_get_supported_docs(self):
         """Test the _get_supported_docs method."""
@@ -234,4 +261,4 @@ class TestChainOfRAG(BaseAgentTest):
 
 if __name__ == "__main__":
     import unittest
-    unittest.main() 
+    unittest.main()

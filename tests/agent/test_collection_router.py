@@ -3,7 +3,6 @@ from unittest.mock import MagicMock, patch
 from deepsearcher.agent.collection_router import CollectionRouter
 from deepsearcher.llm.base import ChatResponse
 from deepsearcher.vector_db.base import CollectionInfo
-
 from tests.agent.test_base import BaseAgentTest
 
 
@@ -148,7 +147,47 @@ class TestCollectionRouter(BaseAgentTest):
         self.assertEqual(set(selected_collections), {"with_desc", "no_desc"})
         self.assertEqual(tokens, 5)
 
+    def test_invoke_filters_authorized_collections(self):
+        """Test that routing only considers collections authorized for the caller."""
+        query = "quarterly revenue"
+
+        self.llm.chat = MagicMock(return_value=ChatResponse(
+            content='["science", "news"]',
+            total_tokens=10
+        ))
+
+        with patch('deepsearcher.utils.log.color_print'):
+            selected_collections, tokens = self.collection_router.invoke(
+                query,
+                dim=8,
+                authorized_collection_set=["news"],
+            )
+
+        self.assertEqual(selected_collections, ["news"])
+        self.assertEqual(tokens, 0)
+        self.llm.chat.assert_not_called()
+
+    def test_invoke_filters_llm_selected_unauthorized_collections(self):
+        """Test that LLM-selected collections are constrained by authorization."""
+        query = "quarterly revenue"
+
+        self.llm.chat = MagicMock(return_value=ChatResponse(
+            content='["science", "news"]',
+            total_tokens=10
+        ))
+
+        with patch('deepsearcher.utils.log.color_print'):
+            selected_collections, tokens = self.collection_router.invoke(
+                query,
+                dim=8,
+                authorized_collection_set=["books", "news"],
+            )
+
+        self.assertEqual(set(selected_collections), {"books", "news"})
+        self.assertNotIn("science", selected_collections)
+        self.assertEqual(tokens, 10)
+
 
 if __name__ == "__main__":
     import unittest
-    unittest.main() 
+    unittest.main()

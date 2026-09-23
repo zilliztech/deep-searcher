@@ -1,9 +1,8 @@
-from unittest.mock import MagicMock, patch
 import asyncio
+from unittest.mock import MagicMock
 
 from deepsearcher.agent import DeepSearch
 from deepsearcher.vector_db.base import RetrievalResult
-
 from tests.agent.test_base import BaseAgentTest
 
 
@@ -74,6 +73,33 @@ class TestDeepSearch(BaseAgentTest):
         # With our mock returning "YES" for RERANK_PROMPT, all chunks should be accepted
         self.assertEqual(len(results), 3)  # 3 mock results from MockVectorDB
         self.assertEqual(tokens, 35)  # 5 from collection_router + 10*3 from LLM calls for reranking
+
+    def test_search_chunks_from_vectordb_forwards_authorization_context(self):
+        """Test vector DB search receives caller authorization context."""
+        query = "What is deep learning?"
+        sub_queries = ["What is deep learning?"]
+
+        self.deep_search.collection_router.invoke = MagicMock(return_value=(["test_collection"], 5))
+
+        results, tokens = asyncio.run(
+            self.deep_search._search_chunks_from_vectordb(
+                query,
+                sub_queries,
+                authorized_collection_set=["test_collection"],
+                tenant_id="tenant_a",
+            )
+        )
+
+        self.deep_search.collection_router.invoke.assert_called_once_with(
+            query=query,
+            dim=self.embedding_model.dimension,
+            authorized_collection_set=["test_collection"],
+            tenant_id="tenant_a",
+        )
+        self.assertEqual(self.vector_db.last_search_kwargs["authorized_collection_set"], ["test_collection"])
+        self.assertEqual(self.vector_db.last_search_kwargs["tenant_id"], "tenant_a")
+        self.assertEqual(len(results), 3)
+        self.assertEqual(tokens, 35)
     
     def test_generate_gap_queries(self):
         """Test the _generate_gap_queries method."""
@@ -232,4 +258,4 @@ class TestDeepSearch(BaseAgentTest):
 
 if __name__ == "__main__":
     import unittest
-    unittest.main() 
+    unittest.main()

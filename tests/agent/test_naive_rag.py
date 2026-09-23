@@ -2,7 +2,6 @@ from unittest.mock import MagicMock
 
 from deepsearcher.agent import NaiveRAG
 from deepsearcher.vector_db.base import RetrievalResult
-
 from tests.agent.test_base import BaseAgentTest
 
 
@@ -51,6 +50,29 @@ class TestNaiveRAG(BaseAgentTest):
         
         # Check token count
         self.assertEqual(tokens, 5)  # From our mocked collection_router.invoke
+
+    def test_retrieve_forwards_authorization_context(self):
+        """Test retrieve passes caller context to routing and vector search."""
+        query = "Test query"
+
+        self.naive_rag.collection_router.invoke = MagicMock(return_value=(["test_collection"], 5))
+
+        results, tokens, metadata = self.naive_rag.retrieve(
+            query,
+            authorized_collection_set=["test_collection"],
+            tenant_id="tenant_a",
+        )
+
+        self.naive_rag.collection_router.invoke.assert_called_once_with(
+            query=query,
+            dim=self.embedding_model.dimension,
+            authorized_collection_set=["test_collection"],
+            tenant_id="tenant_a",
+        )
+        self.assertEqual(self.vector_db.last_search_kwargs["authorized_collection_set"], ["test_collection"])
+        self.assertEqual(self.vector_db.last_search_kwargs["tenant_id"], "tenant_a")
+        self.assertEqual(tokens, 5)
+        self.assertEqual(len(results), 3)
     
     def test_retrieve_without_routing(self):
         """Test retrieve method with routing disabled."""
@@ -69,6 +91,28 @@ class TestNaiveRAG(BaseAgentTest):
         
         # Check token count
         self.assertEqual(tokens, 0)  # No tokens used for routing
+
+    def test_retrieve_without_routing_filters_authorized_collections(self):
+        """Test disabled routing still respects authorized collections."""
+        self.vector_db._collections.append(
+            self.vector_db._collections[0].__class__(
+                collection_name="secret_collection",
+                description="Secret collection",
+            )
+        )
+        self.naive_rag.collection_router.all_collections = ["test_collection", "secret_collection"]
+        self.naive_rag.route_collection = False
+        query = "Test query without routing"
+
+        results, tokens, metadata = self.naive_rag.retrieve(
+            query,
+            authorized_collection_set=["test_collection"],
+        )
+
+        self.assertEqual(self.vector_db.last_search_collection, "test_collection")
+        self.assertEqual(self.vector_db.last_search_kwargs["authorized_collection_set"], ["test_collection"])
+        self.assertEqual(tokens, 0)
+        self.assertEqual(len(results), 3)
     
     def test_query(self):
         """Test the query method."""
@@ -127,4 +171,4 @@ class TestNaiveRAG(BaseAgentTest):
 
 if __name__ == "__main__":
     import unittest
-    unittest.main() 
+    unittest.main()
