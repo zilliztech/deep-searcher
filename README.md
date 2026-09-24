@@ -96,7 +96,7 @@ result = query("Write a report about xxx.") # Your question here
 #### LLM Configuration
 
 <pre><code>config.set_provider_config("llm", "(LLMName)", "(Arguments dict)")</code></pre>
-<p>The "LLMName" can be one of the following: ["DeepSeek", "OpenAI", "XAI", "SiliconFlow", "Aliyun", "PPIO", "TogetherAI", "Gemini", "Ollama", "Novita", "Jiekou.AI"]</p>
+<p>The "LLMName" can be one of the following: ["DeepSeek", "OpenAI", "XAI", "SiliconFlow", "Aliyun", "PPIO", "TogetherAI", "Gemini", "Ollama", "Novita", "Jiekou.AI", "AtlasCloud"]</p>
 <p> The "Arguments dict" is a dictionary that contains the necessary arguments for the LLM class.</p>
 
 <details>
@@ -178,6 +178,13 @@ result = query("Write a report about xxx.") # Your question here
     <p> Make sure you have prepared your Jiekou.AI API KEY as an env variable <code>JIEKOU_API_KEY</code>. You can create an API Key <a href="https://jiekou.ai/settings/key-management?utm_source=github_deep-searcher">here</a>. </p>
     <pre><code>config.set_provider_config("llm", "JiekouAI", {"model": "claude-sonnet-4-5-20250929"})</code></pre>
     <p> More details about Jiekou.AI: https://docs.jiekou.ai/docs/support/quickstart?utm_source=github_deep-searcher </p>
+</details>
+
+<details>
+  <summary>Example (DeepSeek from Atlas Cloud)</summary>
+    <p> Make sure you have prepared your Atlas Cloud API KEY as an env variable <code>ATLASCLOUD_API_KEY</code>. You can create an API Key <a href="https://www.atlascloud.ai/console?utm_source=github_deep-searcher">here</a>. </p>
+    <pre><code>config.set_provider_config("llm", "AtlasCloud", {"model": "deepseek-ai/deepseek-v4-pro"})</code></pre>
+    <p> More details about Atlas Cloud: https://www.atlascloud.ai/docs?utm_source=github_deep-searcher </p>
 </details>
 
 <details>
