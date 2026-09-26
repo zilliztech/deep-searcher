@@ -60,6 +60,8 @@ class AzureOpenAI(BaseLLM):
             model=self.model,
             messages=messages,
         )
+        if not completion.choices or completion.choices[0].message is None:
+            raise ValueError("LLM returned empty or filtered response")
         return ChatResponse(
             content=completion.choices[0].message.content,
             total_tokens=completion.usage.total_tokens,
