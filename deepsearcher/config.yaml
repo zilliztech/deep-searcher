@@ -52,6 +52,12 @@ provide_settings:
 #      model: "deepseek/deepseek-v3-0324"
 ##      api_key: "sk_xxxxxx"  # Uncomment to override the `NOVITA_API_KEY` set in the environment variable
 
+#    provider: "LiteLLM"
+#    config:
+#      model: "anthropic/claude-sonnet-4-20250514"  # Any LiteLLM-supported model
+##      api_key: "sk-xxxx"  # Uncomment to override the `LITELLM_API_KEY` set in the environment variable
+##      api_base: "http://localhost:4000"  # Uncomment to use a LiteLLM proxy server
+
   embedding:
     provider: "OpenAIEmbedding"
     config:
@@ -104,6 +110,13 @@ provide_settings:
     # provider: "SentenceTransformerEmbedding"
     # config:
     #   model: "BAAI/bge-large-zh-v1.5"
+
+#    provider: "LiteLLMEmbedding"
+#    config:
+#      model: "text-embedding-ada-002"  # Any LiteLLM-supported embedding model
+##      api_key: "sk-xxxx"  # Uncomment to override the `LITELLM_API_KEY` set in the environment variable
+##      api_base: "http://localhost:4000"  # Uncomment to use a LiteLLM proxy server
+##      dimension: 1536
 
   file_loader:
     provider: "PDFLoader"
