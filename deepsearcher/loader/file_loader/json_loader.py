@@ -89,6 +89,6 @@ class JsonFileLoader(BaseLoader):
         Get the list of file extensions supported by this loader.
 
         Returns:
-            A list of supported file extensions: ["txt", "md"].
+            A list of supported file extensions: ["json", "jsonl"].
         """
-        return ["txt", "md"]
+        return ["json", "jsonl"]
