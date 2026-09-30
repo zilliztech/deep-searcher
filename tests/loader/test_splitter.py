@@ -1,5 +1,6 @@
 import unittest
 from langchain_core.documents import Document
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 from deepsearcher.loader.splitter import Chunk, split_docs_to_chunks, _sentence_window_split
 
@@ -59,6 +60,77 @@ class TestSplitter(unittest.TestCase):
             # With smaller offset, wider_text should be shorter than the full original text
             self.assertLessEqual(len(chunk.metadata["wider_text"]), len(original_text))
     
+    def test_sentence_window_split_repeated_text(self):
+        """Test that repeated text gets the context window of its own position."""
+        original_text = "x" + "." * 20 + "y" + "-" * 20 + "x"
+        original_doc = Document(page_content=original_text, metadata={"reference": "test_doc"})
+        split_docs = [
+            Document(page_content="x", metadata={"reference": "test_doc"}),
+            Document(page_content="y", metadata={"reference": "test_doc"}),
+            Document(page_content="x", metadata={"reference": "test_doc"}),
+        ]
+
+        chunks = _sentence_window_split(split_docs, original_doc, offset=3)
+
+        self.assertEqual(chunks[0].metadata["wider_text"], "x...")
+        self.assertEqual(chunks[1].metadata["wider_text"], "...y---")
+        self.assertEqual(chunks[2].metadata["wider_text"], "---x")
+
+    def test_sentence_window_split_text_inside_previous_chunk(self):
+        """Test that a chunk whose text also occurs inside the previous chunk is not placed there."""
+        original_doc = Document(page_content="XABCABC", metadata={"reference": "test_doc"})
+        split_docs = [
+            Document(page_content="XABC", metadata={"reference": "test_doc"}),
+            Document(page_content="ABC", metadata={"reference": "test_doc"}),
+        ]
+
+        chunks = _sentence_window_split(split_docs, original_doc, offset=1)
+
+        self.assertEqual(chunks[0].metadata["wider_text"], "XABCA")
+        self.assertEqual(chunks[1].metadata["wider_text"], "CABC")
+
+    def test_sentence_window_split_matches_splitter_positions(self):
+        """Test that chunk positions match the splitter's own start indexes."""
+        for original_text, chunk_size, chunk_overlap in [
+            ("ab ab ab ab ab", 5, 0),
+            ("x ab ab", 6, 1),
+        ]:
+            with self.subTest(original_text=original_text, chunk_overlap=chunk_overlap):
+                splitter = RecursiveCharacterTextSplitter(
+                    chunk_size=chunk_size, chunk_overlap=chunk_overlap, add_start_index=True
+                )
+                split_docs = splitter.split_documents([Document(page_content=original_text)])
+                expected = []
+                for d in split_docs:
+                    start = d.metadata["start_index"]
+                    end = start + len(d.page_content)
+                    expected.append(original_text[max(0, start - 1) : end + 1])
+
+                chunks = _sentence_window_split(
+                    split_docs,
+                    Document(page_content=original_text),
+                    offset=1,
+                    chunk_overlap=chunk_overlap,
+                )
+
+                self.assertEqual([c.metadata["wider_text"] for c in chunks], expected)
+
+    def test_sentence_window_split_text_not_in_original(self):
+        """Test that a chunk missing from the original text falls back to its own text."""
+        original_doc = Document(page_content="alpha beta", metadata={"reference": "test_doc"})
+        split_docs = [
+            Document(page_content="alpha", metadata={"reference": "test_doc"}),
+            Document(page_content="gamma", metadata={"reference": "test_doc"}),
+            Document(page_content="beta", metadata={"reference": "test_doc"}),
+        ]
+
+        chunks = _sentence_window_split(split_docs, original_doc, offset=2)
+
+        self.assertEqual(len(chunks), 3)
+        self.assertEqual(chunks[0].metadata["wider_text"], "alpha b")
+        self.assertEqual(chunks[1].metadata["wider_text"], "gamma")
+        self.assertEqual(chunks[2].metadata["wider_text"], "a beta")
+
     def test_split_docs_to_chunks(self):
         """Test split_docs_to_chunks function."""
         # Create test documents
