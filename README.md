@@ -96,7 +96,7 @@ result = query("Write a report about xxx.") # Your question here
 #### LLM Configuration
 
 <pre><code>config.set_provider_config("llm", "(LLMName)", "(Arguments dict)")</code></pre>
-<p>The "LLMName" can be one of the following: ["DeepSeek", "OpenAI", "XAI", "SiliconFlow", "Aliyun", "PPIO", "TogetherAI", "Gemini", "Ollama", "Novita", "Jiekou.AI"]</p>
+<p>The "LLMName" can be one of the following: ["DeepSeek", "OpenAI", "XAI", "SiliconFlow", "Aliyun", "PPIO", "TogetherAI", "Gemini", "Ollama", "Novita", "Jiekou.AI", "MiniMax"]</p>
 <p> The "Arguments dict" is a dictionary that contains the necessary arguments for the LLM class.</p>
 
 <details>
@@ -178,6 +178,13 @@ result = query("Write a report about xxx.") # Your question here
     <p> Make sure you have prepared your Jiekou.AI API KEY as an env variable <code>JIEKOU_API_KEY</code>. You can create an API Key <a href="https://jiekou.ai/settings/key-management?utm_source=github_deep-searcher">here</a>. </p>
     <pre><code>config.set_provider_config("llm", "JiekouAI", {"model": "claude-sonnet-4-5-20250929"})</code></pre>
     <p> More details about Jiekou.AI: https://docs.jiekou.ai/docs/support/quickstart?utm_source=github_deep-searcher </p>
+</details>
+
+<details>
+  <summary>Example (MiniMax)</summary>
+    <p> Make sure you have prepared your MiniMax API KEY as an env variable <code>MINIMAX_API_KEY</code>. You can create an API Key at <a href="https://platform.minimaxi.com">MiniMax Platform</a>.</p>
+    <pre><code>config.set_provider_config("llm", "MiniMax", {"model": "MiniMax-M2.7"})</code></pre>
+    <p> More details about MiniMax: https://platform.minimaxi.com/document/introduction </p>
 </details>
 
 <details>
@@ -577,6 +584,7 @@ nest_asyncio.apply()
 - [Novita AI](https://novita.ai/docs/guides/introduction?utm_source=github_deep-searcher&utm_medium=github_readme&utm_campaign=link) (`NOVITA_API_KEY` env variable required)
 - [IBM watsonx.ai](https://www.ibm.com/products/watsonx-ai/foundation-models#ibmfm) (`WATSONX_APIKEY`, `WATSONX_URL`, `WATSONX_PROJECT_ID` env variable required)
 - [Jiekou.AI](https://jiekou.ai/?utm_source=github_deep-searcher) (`JIEKOU_API_KEY` env variable required)
+- [MiniMax](https://platform.minimaxi.com/document/introduction) (`MINIMAX_API_KEY` env variable required)
 
 ### 🔹 Document Loader
 - Local File
