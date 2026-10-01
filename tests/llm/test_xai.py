@@ -60,7 +60,7 @@ class TestXAI(unittest.TestCase):
             )
             
             # Check default model
-            self.assertEqual(llm.model, "grok-2-latest")
+            self.assertEqual(llm.model, "grok-4")
 
     def test_init_with_api_key_from_env(self):
         """Test initialization with API key from environment variable."""
@@ -112,7 +112,7 @@ class TestXAI(unittest.TestCase):
         # Check that completions.create was called correctly
         self.mock_completions.create.assert_called_once()
         call_args = self.mock_completions.create.call_args
-        self.assertEqual(call_args[1]["model"], "grok-2-latest")
+        self.assertEqual(call_args[1]["model"], "grok-4")
         self.assertEqual(call_args[1]["messages"], messages)
 
         # Check response
@@ -137,7 +137,7 @@ class TestXAI(unittest.TestCase):
         # Check that completions.create was called correctly
         self.mock_completions.create.assert_called_once()
         call_args = self.mock_completions.create.call_args
-        self.assertEqual(call_args[1]["model"], "grok-2-latest")
+        self.assertEqual(call_args[1]["model"], "grok-4")
         self.assertEqual(call_args[1]["messages"], messages)
 
         # Check response
