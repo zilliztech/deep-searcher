@@ -223,7 +223,7 @@ class Milvus(BaseVectorDB):
                     reqs=[sparse_request, dense_request],
                     ranker=RRFRanker(),
                     limit=top_k,
-                    output_fields=["embedding", "text", "reference", "metadata"],
+                    output_fields=["text", "reference", "metadata"],
                     timeout=10,
                 )
             else:
@@ -231,13 +231,13 @@ class Milvus(BaseVectorDB):
                     collection_name=collection,
                     data=[vector],
                     limit=top_k,
-                    output_fields=["embedding", "text", "reference", "metadata"],
+                    output_fields=["text", "reference", "metadata"],
                     timeout=10,
                 )
 
             return [
                 RetrievalResult(
-                    embedding=b["entity"]["embedding"],
+                    embedding=None,
                     text=b["entity"]["text"],
                     reference=b["entity"]["reference"],
                     score=b["distance"],
