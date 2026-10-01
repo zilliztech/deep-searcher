@@ -35,10 +35,13 @@ def main():
         )
         sys.exit(1)
 
-    config = Configuration()  # Customize your config here
-    init_config(config=config)
-
     parser = argparse.ArgumentParser(prog="deepsearcher", description="Deep Searcher.")
+    parser.add_argument(
+        "--config",
+        type=str,
+        default=None,
+        help="Path to a custom configuration YAML file. Defaults to the built-in config.yaml.",
+    )
     subparsers = parser.add_subparsers(dest="subcommand", title="subcommands")
 
     ## Arguments of query
@@ -87,6 +90,10 @@ def main():
     )
 
     args = parser.parse_args()
+
+    config = Configuration(config_path=args.config) if args.config else Configuration()
+    init_config(config=config)
+
     if args.subcommand == "query":
         final_answer, refs, consumed_tokens = query(args.query, max_iter=args.max_iter)
         log.color_print("\n==== FINAL ANSWER====\n")
