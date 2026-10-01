@@ -89,8 +89,6 @@ def main():
     args = parser.parse_args()
     if args.subcommand == "query":
         final_answer, refs, consumed_tokens = query(args.query, max_iter=args.max_iter)
-        log.color_print("\n==== FINAL ANSWER====\n")
-        log.color_print(final_answer)
         log.color_print("\n### References\n")
         for i, ref in enumerate(refs):
             log.color_print(f"{i + 1}. {ref.text[:60]}… {ref.reference}")
