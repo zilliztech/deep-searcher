@@ -27,6 +27,7 @@ config.set_provider_config("llm", "(LLMName)", "(Arguments dict)")
 | **Novita** | Novita AI models | Various options |
 | **IBM watsonx.ai** | IBM Enterprise AI platform | Various options |
 | **Jiekou.AI** | Jiekou.AI models | Claude, OpenAI, Deepseek, Grok, Qwen, etc. |
+| **Atlas Cloud** | OpenAI-compatible inference platform | DeepSeek, Qwen, GLM, Kimi, MiniMax, etc. |
 
 ## 🔍 Provider Examples
 
@@ -43,6 +44,19 @@ config.set_provider_config("llm", "OpenAI", {"model": "o1-mini"})
 config.set_provider_config("llm", "DeepSeek", {"model": "deepseek-reasoner"})
 ```
 *Requires `DEEPSEEK_API_KEY` environment variable*
+
+### Atlas Cloud
+
+```python
+config.set_provider_config("llm", "AtlasCloud", {"model": "deepseek-ai/deepseek-v4-pro"})
+```
+*Requires `ATLASCLOUD_API_KEY` environment variable*
+
+`deepseek-ai/deepseek-v4-pro` is a reasoning model: it spends completion tokens on a hidden chain of
+thought before the answer. This provider never sets `max_tokens`, so the model can finish reasoning
+and return content. Extra config keys are passed to the OpenAI client constructor (e.g. `timeout`);
+request-level parameters such as `max_tokens` are not supported. If `ATLASCLOUD_API_KEY` is unset
+(and no `api_key` is given) the provider raises an error instead of falling back to `OPENAI_API_KEY`.
 
 ### IBM WatsonX
 

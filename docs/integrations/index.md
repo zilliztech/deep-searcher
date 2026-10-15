@@ -46,6 +46,7 @@ Support for various large language models (LLMs) to process queries and generate
 | **[Novita AI](https://novita.ai/docs/guides/introduction)** | `NOVITA_API_KEY` | Diverse AI services |
 | **[IBM watsonx.ai](https://www.ibm.com/products/watsonx-ai/foundation-models#ibmfm)** | `WATSONX_APIKEY`, `WATSONX_URL`, `WATSONX_PROJECT_ID` | IBM's Enterprise AI platform |
 | **[Jiekou.AI](https://jiekou.ai/?utm_source=github_deep-searcher)** | `JIEKOU_API_KEY` | Various open-source and closed-source models |
+| **[Atlas Cloud](https://www.atlascloud.ai/docs?utm_source=github_deep-searcher)** | `ATLASCLOUD_API_KEY` | OpenAI-compatible access to DeepSeek, Qwen, GLM, Kimi, MiniMax, etc. |
 
 ## 📄 Document Loader {#document-loader}
 

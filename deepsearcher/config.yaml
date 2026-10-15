@@ -52,6 +52,12 @@ provide_settings:
 #      model: "deepseek/deepseek-v3-0324"
 ##      api_key: "sk_xxxxxx"  # Uncomment to override the `NOVITA_API_KEY` set in the environment variable
 
+#    provider: "AtlasCloud"
+#    config:
+#      model: "deepseek-ai/deepseek-v4-pro"
+##      api_key: "xxxx"  # Uncomment to override the `ATLASCLOUD_API_KEY` set in the environment variable
+##      base_url: ""
+
   embedding:
     provider: "OpenAIEmbedding"
     config:

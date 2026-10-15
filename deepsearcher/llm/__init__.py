@@ -1,5 +1,6 @@
 from .aliyun import Aliyun
 from .anthropic_llm import Anthropic
+from .atlascloud import AtlasCloud
 from .azure_openai import AzureOpenAI
 from .bedrock import Bedrock
 from .deepseek import DeepSeek
@@ -34,4 +35,5 @@ __all__ = [
     "Aliyun",
     "WatsonX",
     "JiekouAI",
+    "AtlasCloud",
 ]
