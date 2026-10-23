@@ -3,7 +3,7 @@ from unittest.mock import MagicMock
 from deepsearcher.agent import NaiveRAG
 from deepsearcher.vector_db.base import RetrievalResult
 
-from tests.agent.test_base import BaseAgentTest
+from tests.agent.test_base import BaseAgentTest, MockVectorDB
 
 
 class TestNaiveRAG(BaseAgentTest):
@@ -70,6 +70,87 @@ class TestNaiveRAG(BaseAgentTest):
         # Check token count
         self.assertEqual(tokens, 0)  # No tokens used for routing
     
+    def test_retrieve_without_routing_at_construction(self):
+        """Disabling routing at construction still retrieves existing documents."""
+        agent = NaiveRAG(
+            llm=self.llm,
+            embedding_model=self.embedding_model,
+            vector_db=self.vector_db,
+            route_collection=False,
+        )
+
+        results, tokens, metadata = agent.retrieve("Test query without routing")
+
+        self.assertEqual(
+            [result.reference for result in results],
+            [f"test_reference_test_collection_{i}" for i in range(3)],
+        )
+        self.assertEqual(tokens, 0)
+        self.assertEqual(metadata, {})
+        self.assertFalse(self.llm.chat_called)
+
+    def test_retrieve_multiple_collections_without_routing(self):
+        """All collections are searched without an LLM selection step."""
+        vector_db = MockVectorDB(collections=["first", "second"])
+        agent = NaiveRAG(
+            llm=self.llm,
+            embedding_model=self.embedding_model,
+            vector_db=vector_db,
+            top_k=6,
+            route_collection=False,
+        )
+
+        results, tokens, metadata = agent.retrieve("Test query without routing")
+
+        self.assertEqual(
+            [result.reference for result in results],
+            [
+                f"test_reference_{collection}_{i}"
+                for collection in ["first", "second"]
+                for i in range(3)
+            ],
+        )
+        self.assertEqual(tokens, 0)
+        self.assertEqual(metadata, {})
+        self.assertFalse(self.llm.chat_called)
+
+    def test_retrieve_empty_database_without_routing(self):
+        """An empty database returns an empty result without routing or search."""
+        self.vector_db._collections = []
+        agent = NaiveRAG(
+            llm=self.llm,
+            embedding_model=self.embedding_model,
+            vector_db=self.vector_db,
+            route_collection=False,
+        )
+
+        self.assertEqual(agent.retrieve("Test query without routing"), ([], 0, {}))
+        self.assertFalse(self.vector_db.search_called)
+        self.assertFalse(self.llm.chat_called)
+
+    def test_query_without_routing_at_construction(self):
+        """The query API retrieves evidence and only calls the LLM for the answer."""
+        self.llm.chat = MagicMock(wraps=self.llm.chat)
+        agent = NaiveRAG(
+            llm=self.llm,
+            embedding_model=self.embedding_model,
+            vector_db=self.vector_db,
+            route_collection=False,
+        )
+
+        answer, results, tokens = agent.query("Test query without routing")
+
+        self.assertEqual(answer, "This is a test answer")
+        self.assertEqual(
+            [result.reference for result in results],
+            [f"test_reference_test_collection_{i}" for i in range(3)],
+        )
+        self.assertEqual(tokens, 10)
+        self.llm.chat.assert_called_once()
+        prompt = self.llm.chat.call_args.args[0][0]["content"]
+        for i in range(3):
+            self.assertIn(f"Wider context for test result {i} in collection test_collection", prompt)
+
     def test_query(self):
         """Test the query method."""
         query = "Test query for full RAG"

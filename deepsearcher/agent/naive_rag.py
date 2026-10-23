@@ -48,10 +48,9 @@ class NaiveRAG(RAGAgent):
         self.vector_db = vector_db
         self.top_k = top_k
         self.route_collection = route_collection
-        if self.route_collection:
-            self.collection_router = CollectionRouter(
-                llm=self.llm, vector_db=self.vector_db, dim=embedding_model.dimension
-            )
+        self.collection_router = CollectionRouter(
+            llm=self.llm, vector_db=self.vector_db, dim=embedding_model.dimension
+        )
         self.text_window_splitter = text_window_splitter
 
     def retrieve(self, query: str, **kwargs) -> Tuple[List[RetrievalResult], int, dict]:
