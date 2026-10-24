@@ -9,6 +9,7 @@ from pydantic import BaseModel
 from deepsearcher.configuration import Configuration, init_config
 from deepsearcher.offline_loading import load_from_local_files, load_from_website
 from deepsearcher.online_query import query
+from deepsearcher.utils.str2bool import str2bool
 
 app = FastAPI()
 
@@ -194,7 +195,9 @@ def perform_query(
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="FastAPI Server")
-    parser.add_argument("--enable-cors", type=bool, default=False, help="Enable CORS support")
+    # type=bool would turn "--enable-cors false" into True (bool("false")),
+    # enabling wide-open CORS against the operator's intent
+    parser.add_argument("--enable-cors", type=str2bool, default=False, help="Enable CORS support")
     args = parser.parse_args()
     if args.enable_cors:
         app.add_middleware(
