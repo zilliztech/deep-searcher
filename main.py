@@ -9,6 +9,7 @@ from pydantic import BaseModel
 from deepsearcher.configuration import Configuration, init_config
 from deepsearcher.offline_loading import load_from_local_files, load_from_website
 from deepsearcher.online_query import query
+from deepsearcher.utils.api_key_auth import ApiKeyMiddleware
 
 app = FastAPI()
 
@@ -195,7 +196,19 @@ def perform_query(
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="FastAPI Server")
     parser.add_argument("--enable-cors", type=bool, default=False, help="Enable CORS support")
+    parser.add_argument(
+        "--api-key",
+        type=str,
+        default=None,
+        help=(
+            "Require this API key (sent as the X-API-Key header) on every route. "
+            "When omitted, the server stays unauthenticated for backward compatibility (#278)."
+        ),
+    )
     args = parser.parse_args()
+    if args.api_key:
+        app.add_middleware(ApiKeyMiddleware, api_key=args.api_key)
+        print("API key authentication is enabled.")
     if args.enable_cors:
         app.add_middleware(
             CORSMiddleware,
