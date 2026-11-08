@@ -422,7 +422,7 @@ result = query("Write a report about xxx.") # Your question here
 
 #### Web Crawler Configuration
 <pre><code>config.set_provider_config("web_crawler", "(WebCrawlerName)", "(Arguments dict)")</code></pre>
-<p>The "WebCrawlerName" can be one of the following: ["FireCrawlCrawler", "Crawl4AICrawler", "JinaCrawler"]</p>
+<p>The "WebCrawlerName" can be one of the following: ["FireCrawlCrawler", "Crawl4AICrawler", "JinaCrawler", "OutcrawlCrawler"]</p>
 <p> The "Arguments dict" is a dictionary that contains the necessary arguments for the Web Crawler class.</p>
 
 <details>
@@ -444,6 +444,13 @@ result = query("Write a report about xxx.") # Your question here
     <p> Make sure you have prepared your Jina Reader API KEY as an env variable <code>JINA_API_TOKEN</code> or <code>JINAAI_API_KEY</code>.</p>
     <pre><code>config.set_provider_config("web_crawler", "JinaCrawler", {})</code></pre>
     <p> More details about Jina Reader: https://jina.ai/reader/ </p>
+</details>
+
+<details>
+  <summary>Example (Outcrawl)</summary>
+    <p> Make sure you have prepared your Outcrawl API KEY as an env variable <code>OUTCRAWL_API_KEY</code>.</p>
+    <pre><code>config.set_provider_config("web_crawler", "OutcrawlCrawler", {})</code></pre>
+    <p> More details about Outcrawl: https://outcrawl.ai </p>
 </details>
 
 <details>

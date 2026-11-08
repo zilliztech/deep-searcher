@@ -64,6 +64,7 @@ Support for loading and processing documents from various sources.
 |---------|-------------|--------------------------------------|
 | **[FireCrawl](https://docs.firecrawl.dev/introduction)** | Crawler designed for AI applications | `FIRECRAWL_API_KEY` |
 | **[Jina Reader](https://jina.ai/reader/)** | High-accuracy web content extraction | `JINA_API_TOKEN` |
+| **[Outcrawl](https://outcrawl.ai)** | Cloud browser scrape API, markdown output | `OUTCRAWL_API_KEY` |
 | **[Crawl4AI](https://docs.crawl4ai.com/)** | Browser automation crawler | Run `crawl4ai-setup` for first-time use |
 
 ## 💾 Vector Database Support {#vector-database-support}

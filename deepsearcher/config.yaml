@@ -143,6 +143,9 @@ provide_settings:
     #    provider: "DoclingCrawler"
     #    config: {}
 
+    #    provider: "OutcrawlCrawler"
+    #    config: {}
+
   vector_db:
     provider: "Milvus"
     config:

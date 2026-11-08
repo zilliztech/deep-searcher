@@ -15,6 +15,7 @@ config.set_provider_config("web_crawler", "(WebCrawlerName)", "(Arguments dict)"
 | **FireCrawlCrawler** | Cloud-based web crawling service | Simple API, managed service |
 | **Crawl4AICrawler** | Browser automation crawler | Full JavaScript support |
 | **JinaCrawler** | Content extraction service | High accuracy parsing |
+| **OutcrawlCrawler** | Cloud browser scrape API | Clean markdown from JavaScript-rendered pages |
 | **DoclingCrawler** | Doc processing with crawling | Multiple format support |
 
 ## 🔍 Web Crawler Options
@@ -79,6 +80,22 @@ config.set_provider_config("web_crawler", "JinaCrawler", {})
        export JINAAI_API_KEY="your_api_key"
        ```
     3. For more information, see the [Jina Reader documentation](https://jina.ai/reader/)
+
+### Outcrawl
+
+[Outcrawl](https://outcrawl.ai) is web infrastructure for AI agents. Its scrape API loads a page in a cloud browser and returns the content as markdown.
+
+```python
+config.set_provider_config("web_crawler", "OutcrawlCrawler", {})
+```
+
+??? tip "Setup Instructions"
+
+    1. Get an Outcrawl API key at [outcrawl.ai](https://outcrawl.ai)
+    2. Set the API key as an environment variable:
+       ```bash
+       export OUTCRAWL_API_KEY="your_api_key"
+       ```
 
 ### Docling Crawler
 
