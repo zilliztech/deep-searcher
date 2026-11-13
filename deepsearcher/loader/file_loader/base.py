@@ -53,7 +53,7 @@ class BaseLoader(ABC):
         for root, _, files in os.walk(directory):
             for file in files:
                 for suffix in self.supported_file_types:
-                    if file.endswith(suffix):
+                    if file.endswith("." + suffix.lstrip(".")):
                         full_path = os.path.join(root, file)
                         documents.extend(self.load_file(full_path))
                         break

@@ -137,6 +137,15 @@ class TestPDFLoader(unittest.TestCase):
         # Check that we got two documents
         self.assertEqual(len(documents), 2)
 
+    def test_load_directory_ignores_names_that_only_end_with_extension_letters(self):
+        """A file like build.cmd ends with "md" but is not a .md file."""
+        cmd_path = os.path.join(self.temp_dir.name, "build.cmd")
+        with open(cmd_path, "w", encoding="utf-8") as f:
+            f.write("@echo off")
+        documents = PDFLoader().load_directory(self.temp_dir.name)
+        self.assertEqual(len(documents), 2)
+        self.assertNotIn(cmd_path, [d.metadata["reference"] for d in documents])
+
 
 if __name__ == "__main__":
     unittest.main() 
