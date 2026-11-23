@@ -14,6 +14,7 @@ config.set_provider_config("llm", "(LLMName)", "(Arguments dict)")
 |----------|-------------|------------|
 | **OpenAI** | OpenAI's API for GPT models | o1-mini, GPT-4 |
 | **DeepSeek** | DeepSeek AI offering | deepseek-reasoner, coder |
+| **NVIDIA** | NVIDIA NIM models | nemotron-3.5-super-vl-120b-a12b, nemotron-3.5-lightning-30b-a3b |
 | **Anthropic** | Anthropic's Claude models | claude-sonnet-4-0 |
 | **Gemini** | Google's Gemini models | gemini-1.5-pro, gemini-2.0-flash |
 | **XAI** | X.AI's Grok models | grok-2-latest |
@@ -43,6 +44,13 @@ config.set_provider_config("llm", "OpenAI", {"model": "o1-mini"})
 config.set_provider_config("llm", "DeepSeek", {"model": "deepseek-reasoner"})
 ```
 *Requires `DEEPSEEK_API_KEY` environment variable*
+
+### NVIDIA
+
+```python
+config.set_provider_config("llm", "NVIDIA", {"model": "nvidia/nemotron-3.5-super-vl-120b-a12b"})
+```
+*Requires `NVIDIA_API_KEY` environment variable*
 
 ### IBM WatsonX
 
