@@ -7,6 +7,7 @@ from .gemini import Gemini
 from .glm import GLM
 from .jiekouai import JiekouAI
 from .novita import Novita
+from .nvidia import NVIDIA
 from .ollama import Ollama
 from .openai_llm import OpenAI
 from .ppio import PPIO
@@ -18,6 +19,7 @@ from .xai import XAI
 
 __all__ = [
     "DeepSeek",
+    "NVIDIA",
     "OpenAI",
     "TogetherAI",
     "SiliconFlow",

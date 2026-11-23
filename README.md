@@ -96,7 +96,7 @@ result = query("Write a report about xxx.") # Your question here
 #### LLM Configuration
 
 <pre><code>config.set_provider_config("llm", "(LLMName)", "(Arguments dict)")</code></pre>
-<p>The "LLMName" can be one of the following: ["DeepSeek", "OpenAI", "XAI", "SiliconFlow", "Aliyun", "PPIO", "TogetherAI", "Gemini", "Ollama", "Novita", "Jiekou.AI"]</p>
+<p>The "LLMName" can be one of the following: ["DeepSeek", "NVIDIA", "OpenAI", "XAI", "SiliconFlow", "Aliyun", "PPIO", "TogetherAI", "Gemini", "Ollama", "Novita", "Jiekou.AI"]</p>
 <p> The "Arguments dict" is a dictionary that contains the necessary arguments for the LLM class.</p>
 
 <details>
@@ -126,6 +126,13 @@ result = query("Write a report about xxx.") # Your question here
     <p> Make sure you have prepared your DEEPSEEK API KEY as an env variable <code>DEEPSEEK_API_KEY</code>.</p>
     <pre><code>config.set_provider_config("llm", "DeepSeek", {"model": "deepseek-reasoner"})</code></pre>
     <p> More details about DeepSeek: https://api-docs.deepseek.com/ </p>
+</details>
+
+<details>
+  <summary>Example (NVIDIA NIM)</summary>
+    <p> Make sure you have prepared your NVIDIA API KEY as an env variable <code>NVIDIA_API_KEY</code>.</p>
+    <pre><code>config.set_provider_config("llm", "NVIDIA", {"model": "nvidia/nemotron-3.5-super-vl-120b-a12b"})</code></pre>
+    <p> More details about NVIDIA NIM: https://build.nvidia.com/ </p>
 </details>
 
 <details>
@@ -566,6 +573,7 @@ nest_asyncio.apply()
 ### 🔹 LLM Support
 - [OpenAI](https://platform.openai.com/docs/models) (`OPENAI_API_KEY` env variable required)
 - [DeepSeek](https://api-docs.deepseek.com/) (`DEEPSEEK_API_KEY` env variable required)
+- [NVIDIA NIM](https://build.nvidia.com/) (`NVIDIA_API_KEY` env variable required)
 - [XAI Grok](https://x.ai/api) (`XAI_API_KEY` env variable required)
 - [Anthropic Claude](https://docs.anthropic.com/en/home) (`ANTHROPIC_API_KEY` env variable required)
 - [SiliconFlow Inference Service](https://docs.siliconflow.cn/en/userguide/introduction) (`SILICONFLOW_API_KEY` env variable required)
