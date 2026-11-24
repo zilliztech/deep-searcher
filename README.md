@@ -107,6 +107,13 @@ result = query("Write a report about xxx.") # Your question here
 </details>
 
 <details>
+  <summary>Example (Rapid-MLX on Apple Silicon)</summary>
+    <p> Install with <code>brew install rapid-mlx</code> or <code>pip install rapid-mlx</code> (Python 3.12+), then start <code>rapid-mlx serve qwen3.5-4b-4bit --port 8000</code>.</p>
+    <pre><code>config.set_provider_config("llm", "OpenAI", {"model": "mlx-community/Qwen3.5-4B-MLX-4bit", "base_url": "http://localhost:8000/v1", "api_key": "not-needed"})</code></pre>
+    <p> No API key needed; the SDK requires a non-empty placeholder. See the <a href="docs/configuration/llm.md#rapid-mlx">Rapid-MLX configuration guide</a>.</p>
+</details>
+
+<details>
   <summary>Example (Qwen3 from Aliyun Bailian)</summary>
     <p> Make sure you have prepared your Bailian API KEY as an env variable <code>DASHSCOPE_API_KEY</code>.</p>
     <pre><code>config.set_provider_config("llm", "Aliyun", {"model": "qwen-plus-latest"})</code></pre>
@@ -231,6 +238,13 @@ result = query("Write a report about xxx.") # Your question here
     <p> Make sure you have prepared your OpenAI API KEY as an env variable <code>OPENAI_API_KEY</code>.</p>
     <pre><code>config.set_provider_config("embedding", "OpenAIEmbedding", {"model": "text-embedding-3-small"})</code></pre>
     <p> More details about OpenAI models: https://platform.openai.com/docs/guides/embeddings/use-cases </p>
+</details>
+
+<details>
+  <summary>Example (Rapid-MLX embedding)</summary>
+    <p> Install the embeddings runtime with <code>pip install "rapid-mlx[embeddings]"</code> (Python 3.12+), then start <code>rapid-mlx serve qwen3.5-4b-4bit --port 8000 --embedding-model mlx-community/embeddinggemma-2-4bit</code> to serve both chat and embeddings.</p>
+    <pre><code>config.set_provider_config("embedding", "OpenAIEmbedding", {"model": "mlx-community/embeddinggemma-2-4bit", "base_url": "http://localhost:8000/v1", "api_key": "not-needed", "dimension": 768})</code></pre>
+    <p> Set the dimension explicitly. See the <a href="docs/configuration/embedding.md#rapid-mlx">local Milvus Lite RAG example</a>.</p>
 </details>
 
 <details>

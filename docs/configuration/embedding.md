@@ -13,6 +13,7 @@ config.set_provider_config("embedding", "(EmbeddingModelName)", "(Arguments dict
 | Provider | Description | Key Features |
 |----------|-------------|--------------|
 | **OpenAIEmbedding** | OpenAI's text embedding models | High quality, production-ready |
+| **Rapid-MLX (via OpenAIEmbedding)** | Local embeddings on Apple Silicon | 768 dimensions |
 | **MilvusEmbedding** | Built-in embedding models via Pymilvus | Multiple model options |
 | **VoyageEmbedding** | VoyageAI embedding models | Specialized for search |
 | **BedrockEmbedding** | Amazon Bedrock embedding | AWS integration |
@@ -35,6 +36,68 @@ config.set_provider_config("embedding", "(EmbeddingModelName)", "(Arguments dict
 config.set_provider_config("embedding", "OpenAIEmbedding", {"model": "text-embedding-3-small"})
 ```
 *Requires `OPENAI_API_KEY` environment variable*
+
+### Rapid-MLX
+
+Use the existing `OpenAIEmbedding` class with Rapid-MLX's `/v1/embeddings` endpoint.
+Embeddings need Rapid-MLX's optional embeddings runtime. Install it in a
+Python 3.12+ environment, then start a server with both models:
+
+```shell
+pip install "rapid-mlx[embeddings]"
+rapid-mlx serve qwen3.5-4b-4bit --port 8000 --embedding-model mlx-community/embeddinggemma-2-4bit
+```
+
+Set `dimension` explicitly to **768** for this embedding model; the class otherwise
+defaults unknown models to 1536. The server needs no API key, but the SDK requires
+a non-empty placeholder. Both providers use the same base URL, including `/v1`.
+If port 8000 is occupied, choose another port and update both URLs below.
+
+Run this example in a fresh directory to load a local text file into Milvus Lite
+and answer a question using the retrieved text:
+
+```python
+from pathlib import Path
+
+from deepsearcher.configuration import Configuration, init_config
+from deepsearcher.offline_loading import load_from_local_files
+from deepsearcher.online_query import naive_rag_query
+
+config = Configuration()
+config.set_provider_config("llm", "OpenAI", {
+    "model": "mlx-community/Qwen3.5-4B-MLX-4bit",
+    "base_url": "http://localhost:8000/v1",
+    "api_key": "not-needed",
+})
+config.set_provider_config("embedding", "OpenAIEmbedding", {
+    "model": "mlx-community/embeddinggemma-2-4bit",
+    "base_url": "http://localhost:8000/v1",
+    "api_key": "not-needed",
+    "dimension": 768,
+})
+config.set_provider_config("file_loader", "TextLoader", {})
+config.set_provider_config("vector_db", "Milvus", {
+    "uri": "./rapid_mlx.db",
+    "default_collection": "rapid_mlx_demo",
+})
+init_config(config)
+
+Path("rapid_mlx_notes.txt").write_text(
+    "The observatory's telescope is named Aurora. It has a 42 cm aperture.",
+    encoding="utf-8",
+)
+load_from_local_files(
+    "rapid_mlx_notes.txt",
+    collection_description="Observatory notes",
+)
+answer, sources = naive_rag_query("What is the telescope's name and aperture?")
+print(answer)
+print(f"Retrieved {len(sources)} source(s)")
+```
+
+The same provider arguments can be set in `deepsearcher/config.yaml`; see its
+commented Rapid-MLX examples. Use a new collection when changing embedding models
+or dimensions.
 
 ### Milvus Built-in Embedding
 

@@ -6,6 +6,13 @@ provide_settings:
 #      api_key: "sk-xxxx"  # Uncomment to override the `OPENAI_API_KEY` set in the environment variable
 #      base_url: ""
 
+#    # Rapid-MLX: local chat through the existing OpenAI provider
+#    provider: "OpenAI"
+#    config:
+#      model: "mlx-community/Qwen3.5-4B-MLX-4bit"
+#      base_url: "http://localhost:8000/v1"
+#      api_key: "not-needed"
+
 #    provider: "DeepSeek"
 #    config:
 #      model: "deepseek-reasoner"
@@ -59,6 +66,14 @@ provide_settings:
 #      api_key: ""  # Uncomment to override the `OPENAI_API_KEY` set in the environment variable
 #      base_url: "" # Uncomment to override the `OPENAI_BASE_URL` set in the environment variable
 #      dimension: 1536 # Uncomment to customize the embedding dimension 
+
+#    # Rapid-MLX: start serve with --embedding-model mlx-community/embeddinggemma-2-4bit
+#    provider: "OpenAIEmbedding"
+#    config:
+#      model: "mlx-community/embeddinggemma-2-4bit"
+#      base_url: "http://localhost:8000/v1"
+#      api_key: "not-needed"
+#      dimension: 768
 
 
 #    provider: "MilvusEmbedding"

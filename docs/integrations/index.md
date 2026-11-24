@@ -19,6 +19,7 @@ Support for various embedding models to convert text into vector representations
 |----------|--------------------------------|---------|
 | **[Open-source models](https://milvus.io/docs/embeddings.md)** | None | Locally runnable open-source models |
 | **[OpenAI](https://platform.openai.com/docs/guides/embeddings/use-cases)** | `OPENAI_API_KEY` | High-quality embeddings, easy to use |
+| **[Rapid-MLX](../configuration/embedding.md#rapid-mlx)** | None (SDK placeholder) | Local Apple Silicon embeddings via `OpenAIEmbedding` |
 | **[VoyageAI](https://docs.voyageai.com/embeddings/)** | `VOYAGE_API_KEY` | Embeddings optimized for retrieval |
 | **[Amazon Bedrock](https://docs.aws.amazon.com/bedrock/)** | `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY` | AWS integration, enterprise-grade |
 | **[FastEmbed](https://qdrant.github.io/fastembed/)** | None | Fast lightweight embeddings |
@@ -34,6 +35,7 @@ Support for various large language models (LLMs) to process queries and generate
 | Provider | Required Environment Variables | Features |
 |----------|--------------------------------|---------|
 | **[OpenAI](https://platform.openai.com/docs/models)** | `OPENAI_API_KEY` | GPT model family |
+| **[Rapid-MLX](../configuration/llm.md#rapid-mlx)** | None (SDK placeholder) | Local Apple Silicon inference via `OpenAI` |
 | **[DeepSeek](https://api-docs.deepseek.com/)** | `DEEPSEEK_API_KEY` | Powerful reasoning capabilities |
 | **[XAI Grok](https://x.ai/blog/grok-3)** | `XAI_API_KEY` | Real-time knowledge and humor |
 | **[Anthropic Claude](https://docs.anthropic.com/en/home)** | `ANTHROPIC_API_KEY` | Excellent long-context understanding |

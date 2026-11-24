@@ -13,6 +13,7 @@ config.set_provider_config("llm", "(LLMName)", "(Arguments dict)")
 | Provider | Description | Key Models |
 |----------|-------------|------------|
 | **OpenAI** | OpenAI's API for GPT models | o1-mini, GPT-4 |
+| **Rapid-MLX (via OpenAI)** | Local inference on Apple Silicon | Qwen3.5 |
 | **DeepSeek** | DeepSeek AI offering | deepseek-reasoner, coder |
 | **Anthropic** | Anthropic's Claude models | claude-sonnet-4-0 |
 | **Gemini** | Google's Gemini models | gemini-1.5-pro, gemini-2.0-flash |
@@ -36,6 +37,32 @@ config.set_provider_config("llm", "(LLMName)", "(Arguments dict)")
 config.set_provider_config("llm", "OpenAI", {"model": "o1-mini"})
 ```
 *Requires `OPENAI_API_KEY` environment variable*
+
+### Rapid-MLX
+
+[Rapid-MLX](https://github.com/raullenchai/Rapid-MLX) runs locally on Apple Silicon
+and works with the existing `OpenAI` class. Install it with Homebrew:
+
+```shell
+brew install rapid-mlx
+rapid-mlx serve qwen3.5-4b-4bit --port 8000
+```
+
+Alternatively, use `pip install rapid-mlx` in a Python 3.12+ environment.
+
+```python
+config.set_provider_config("llm", "OpenAI", {
+    "model": "mlx-community/Qwen3.5-4B-MLX-4bit",
+    "base_url": "http://localhost:8000/v1",
+    "api_key": "not-needed",
+})
+```
+
+No API key is required by the server; the SDK needs any non-empty placeholder.
+Use `curl http://localhost:8000/v1/models` to find model IDs; Rapid-MLX entries
+have `"owned_by": "rapid-mlx"`. Keep `/v1` in the base URL.
+For local RAG, follow the [embedding recipe](embedding.md#rapid-mlx), which
+starts one server for both chat and embeddings.
 
 ### DeepSeek
 
